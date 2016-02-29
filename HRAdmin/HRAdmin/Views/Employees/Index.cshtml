@@ -1,0 +1,120 @@
+﻿@using HRAdmin.Models
+@model EmployeesViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Main Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <style>
+        /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+        .row.content {
+            height: 550px;
+        }
+
+        /* Set gray background color and 100% height */
+        .sidenav {
+            background-color: #f1f1f1;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container-fluid">
+        <div class="row content">
+            <div class="col-sm-3 sidenav hidden-xs">
+                <h2>Project Name</h2>
+                <ul class="nav nav-pills nav-stacked">
+                    <li><button type="button" class="btn-default" id="btnManageEmployee" value="">Add Employee</button></li>
+                    <li class="active"><button type="button" class="btn-default" id="btnCreateProject" value="">Create Project</button></li>
+                    @foreach (var item in Model.Projects)
+                    {
+                        if (item == Model.Projects.First())
+                        {
+                            <text><li><a class="project" data-id="@item.Id">@item.Name</a></li></text>
+                        }
+                        else {
+                            <text>
+                            <li><a class="project" data-id="@item.Id">@item.Name</a></li>
+                            </text>
+                        }
+                    }
+                </ul><br>
+            </div>
+            <br>
+            <div id="viewContainer">
+                @Html.Partial("Personnel", new ViewDataDictionary { { "projectId", "" } })
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+    $(document).ready(function () {
+        function renderPartialEmployee(id) {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Content("~/ManageEmployee/Index")',
+                data: {
+                    employeeId: id
+                },
+                success: function (result) {
+                    $('#viewContainer').html(result);
+                }
+            });
+        }
+
+        function renderPartialProjectHierachy(id) {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Content("~/Project/ProjectHierarchy")',
+                data: {
+                    projectId: id
+                },
+                success: function (result) {
+                    $('#viewContainer').html(result);
+                }
+            });
+        }
+
+        
+
+        $(".project").on("click", function () {
+            var id = $(this).attr("data-id");
+
+            renderPartialProjectHierachy(id);
+        })
+
+        function renderPartialProject() {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Content("~/ManageEmployee/RenderCreateProject")',
+                data: {
+
+                },
+                success: function (result) {
+                    $('#viewContainer').html(result);
+                }
+            });
+        }
+
+        $('#btnManageEmployee').on('click', function () {
+            renderPartialEmployee(0);
+        });
+
+   
+        $('#btnCreateProject').on('click', function () {
+            renderPartialProject();
+        });
+    });
+</script>

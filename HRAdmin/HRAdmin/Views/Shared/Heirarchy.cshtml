@@ -1,0 +1,160 @@
+﻿
+@using HRAdmin.Models
+@model ProjectHierarchyViewModel
+
+
+<label>Add Personnel</label>
+@Html.DropDownList("personnel", (IEnumerable<SelectListItem>)ViewBag.AvailableEmployeePool, "Id", "Name")
+<button data-projectid="@Model.ProjectId" class="addPerson">Add</button>
+
+<br /><br />
+<label>Current Peronnel:</label>
+
+@Html.LabelFor(x => x.Employees)
+@foreach (var item in Model.Employees)
+{
+    <text>
+        <br />
+        <label>Name: @item.Name</label>
+        <label>Position: @item.Position</label>
+        <button class="deleteRecord" data-id="@item.Id" data-projectid="@item.ProjectId">Delete</button>
+    </text>
+}
+<br />
+<br />
+<label>Team Lead:</label><br />
+@if (Model.TeamLead.Id == 0)
+{
+    @Html.DropDownList("TeamLeads", (IEnumerable<SelectListItem>)ViewBag.AvailableTLs, "Id", "Name")
+    <button data-projectid="@Model.ProjectId" class="addTL">Add</button>
+}
+else
+{
+            <label>Name: @Model.TeamLead.Name</label>
+            <label>Position: TL</label>
+            <button class="deleteRecord" data-id="@Model.TeamLead.Id" data-projectid="@Model.ProjectId">Delete</button>
+}
+<br />
+<br />
+<label>Project Managers</label><br />
+@if (Model.ProjectManager.Id == 0)
+{
+    @Html.DropDownList("PM", (IEnumerable<SelectListItem>)ViewBag.PMS, "Id", "Name")
+    <button data-projectid="@Model.ProjectId" class="addPM">Add</button>
+}
+else
+{
+    <label>Name: @Model.ProjectManager.Name</label>
+        <label>Position: PM </label>
+            <button class="deleteRecord" data-id="@Model.ProjectManager.Id" data-projectid="@Model.ProjectId">Delete</button>
+}
+<br />
+<br />
+<label>Delivery Director</label>
+<br />
+@if (Model.DeliveryDirector.Id == 0)
+{
+    @Html.DropDownList("DD", (IEnumerable<SelectListItem>)ViewBag.DDS, "Id", "Name")
+    <button data-projectid="@Model.ProjectId" class="addDD">Add</button>
+}
+else
+{
+    <label>Name: @Model.DeliveryDirector.Name</label>
+            <label>Position: DD</label>
+            <button class="deleteRecord" data-id="@Model.DeliveryDirector.Id" data-projectid="@Model.ProjectId">Delete</button>
+}
+<br />
+<br />
+<label>CEO</label>
+<br />
+@if (Model.CEO.Id != 0)
+{
+        <label>Name: @Model.CEO.Name</label>
+        <label>Position: CEO</label>
+}
+else
+{
+    <label>The company does not have a CEO</label>
+}
+
+<script>
+    $(".addPerson").on("click", function () {
+        var projectId = $(this).attr("data-projectid");
+        var personId = $("#personnel option:selected").val()
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Content("~/Project/AddToHierarchy")',
+            data: {
+                personId: personId,
+                projectId: projectId
+            },
+            success: function (result) {
+                $('#viewContainer').html(result);
+            }
+        });
+    });
+
+    $(".addTL").on("click", function () {
+        var projectId = $(this).attr("data-projectid");
+        var personId = $("#TeamLeads option:selected").val()
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Content("~/Project/AddToHierarchy")',
+            data: {
+                personId: personId,
+                projectId: projectId
+            },
+            success: function (result) {
+                $('#viewContainer').html(result);
+            }
+        });
+    });
+
+    $(".addPM").on("click", function () {
+        var projectId = $(this).attr("data-projectid");
+        var personId = $("#PM option:selected").val()
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Content("~/Project/AddToHierarchy")',
+            data: {
+                personId: personId,
+                projectId: projectId
+            },
+            success: function (result) {
+                $('#viewContainer').html(result);
+            }
+        });
+    });
+    $(".addDD").on("click", function () {
+        var projectId = $(this).attr("data-projectid");
+        var personId = $("#DD option:selected").val()
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Content("~/Project/AddToHierarchy")',
+            data: {
+                personId: personId,
+                projectId: projectId
+            },
+            success: function (result) {
+                $('#viewContainer').html(result);
+            }
+        });
+    });
+
+    $(".deleteRecord").on("click", function () {
+        var id = $(this).attr("data-id");
+        var projectId = $(this).attr("data-projectid")
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Content("~/Project/DeleteFromHierarchy")',
+            data: {
+                employeeId: id,
+                projectId: projectId
+            },
+            success: function (result) {
+                $('#viewContainer').html(result);
+            }
+        });
+    });
+</script>

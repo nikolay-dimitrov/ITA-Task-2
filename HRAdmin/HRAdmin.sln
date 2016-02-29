@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HRAdmin", "HRAdmin\HRAdmin.csproj", "{D0063006-E613-4623-9689-C3275E979439}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HRModule.Data", "..\HRModule\HRModule.Data\HRModule.Data.csproj", "{FCAF6FDF-FF57-4383-8FDA-A443DD6668D5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7AE8FB5D-D53F-4602-9166-92B8D7D062D3}"
+	ProjectSection(SolutionItems) = preProject
+		Startup.cs = Startup.cs
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D0063006-E613-4623-9689-C3275E979439}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0063006-E613-4623-9689-C3275E979439}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0063006-E613-4623-9689-C3275E979439}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0063006-E613-4623-9689-C3275E979439}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCAF6FDF-FF57-4383-8FDA-A443DD6668D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCAF6FDF-FF57-4383-8FDA-A443DD6668D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCAF6FDF-FF57-4383-8FDA-A443DD6668D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCAF6FDF-FF57-4383-8FDA-A443DD6668D5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
